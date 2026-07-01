@@ -367,6 +367,26 @@ tr.clk{cursor:pointer}
 tr.clk:hover{background:var(--surface2)}
 
 
+
+.cover{min-height:calc(100vh - 130px);border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#002D9F 0%,#0E3AA8 52%,#0072CE 100%);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:40px 48px;box-shadow:0 10px 40px rgba(0,45,159,.25)}
+.cover-top{display:flex;align-items:center;gap:16px}
+.cover-logo{height:52px;background:#fff;border-radius:10px;padding:6px 12px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.cover-org{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+.cover-mid{max-width:860px}
+.cover-kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#BFE0FF;margin-bottom:12px;font-weight:700}
+.cover-title{font-size:54px;line-height:1.04;font-weight:800;margin:0 0 14px;letter-spacing:-.02em}
+.cover-sub{font-size:17px;opacity:.92;margin-bottom:36px;font-weight:500}
+.cover-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:38px;max-width:780px}
+.cover-kpis .ck{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.20);border-radius:13px;padding:17px 18px}
+.cover-kpis .ckv{font-size:29px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.cover-kpis .ckl{font-size:11.5px;opacity:.85;margin-top:6px;line-height:1.3}
+.cover-btn{background:#fff;color:#002D9F;border:none;border-radius:11px;padding:14px 30px;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.22);transition:transform .12s}
+.cover-btn:hover{transform:translateY(-2px)}
+.cover-foot{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;opacity:.82;border-top:1px solid rgba(255,255,255,.22);padding-top:16px;margin-top:26px;flex-wrap:wrap;gap:8px}
+@media(max-width:900px){.cover-kpis{grid-template-columns:repeat(2,1fr)}.cover-title{font-size:40px}}
+.seg-btn{border:1px solid var(--line);background:#fff;color:var(--soft);border-radius:8px;padding:4px 12px;font-size:11.5px;font-weight:700;cursor:pointer;transition:all .12s}
+.seg-btn.seg-on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.seg-btn:hover{border-color:var(--ink)}
 </style>
 
 </head>
@@ -392,7 +412,8 @@ tr.clk:hover{background:var(--surface2)}
     </div>
     <nav class="nav">
       <div class="ng">Vistas</div>
-      <div class="ni active" data-pg="p1" onclick="nav('p1')"><span>Resumen Ejecutivo</span></div>
+      <div class="ni active" data-pg="p0" onclick="nav('p0')"><span>Portada</span></div>
+      <div class="ni" data-pg="p1" onclick="nav('p1')"><span>Resumen Ejecutivo</span></div>
       <div class="ni" data-pg="p2" onclick="nav('p2')"><span>Tendencia y Metas</span></div>
       <div class="ni" data-pg="p3" onclick="nav('p3')"><span>Productos y Motivos</span></div>
       <div class="ni" data-pg="p4" onclick="nav('p4')"><span>Defectos y Causa Raíz</span></div>
@@ -429,7 +450,25 @@ tr.clk:hover{background:var(--surface2)}
       </div>
 
       <!-- ============ P1 RESUMEN ============ -->
-      <div class="page active" id="p1">
+      <div class="page active" id="p0">
+        <div class="cover">
+          <div class="cover-top"><img class="cover-logo" alt="Nutri"/><div class="cover-org">NUTRISOFT · Gerencia de Calidad</div></div>
+          <div class="cover-mid">
+            <div class="cover-kicker">Informe Gerencial de Calidad</div>
+            <h1 class="cover-title">Producto No Conforme</h1>
+            <div class="cover-sub">Análisis integral de calidad · Semanas 14–26 · 30 de marzo – 28 de junio de 2026</div>
+            <div class="cover-kpis">
+              <div class="ck"><div class="ckv" id="cvPct">—</div><div class="ckl">% PNC acumulado · meta ≤ 1,0%</div></div>
+              <div class="ck"><div class="ckv" id="cvMeta2">—</div><div class="ckl">semanas dentro de la meta</div></div>
+              <div class="ck"><div class="ckv" id="cvRec">—</div><div class="ckl">producto recuperado o reingresado</div></div>
+              <div class="ck"><div class="ckv" id="cvJun">—</div><div class="ckl">PNC de junio · tendencia a la baja</div></div>
+            </div>
+            <button class="cover-btn" onclick="nav('p1')">Iniciar presentación →</button>
+          </div>
+          <div class="cover-foot"><span id="cvMeta">—</span><span>Datos al 28 de junio de 2026 · Documento confidencial — uso interno</span></div>
+        </div>
+      </div>
+      <div class="page" id="p1">
         <div class="exec" id="execHero"></div>
         <div id="costSplit" class="csplit"></div>
         <div class="g65">
@@ -472,6 +511,14 @@ tr.clk:hover{background:var(--surface2)}
 
       <!-- ============ P3 PRODUCTOS Y MOTIVOS ============ -->
       <div class="page" id="p3">
+        <div class="card full" style="margin-bottom:16px">
+          <div class="cb" style="display:flex;align-items:center;gap:12px;padding:12px 16px;flex-wrap:wrap">
+            <span style="font-weight:700;color:var(--ink);font-size:13px">Buscar producto</span>
+            <input id="prodSearch" oninput="renderProdSearch()" placeholder="Escribe parte del nombre (p. ej. Entera, SQ, Néctar, 3 Leches)…" style="flex:1;min-width:260px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:13px"/>
+            <span class="clk-note" id="prodSearchN"></span>
+          </div>
+          <div class="cb" style="padding:0;max-height:240px;overflow:auto"><table class="dt"><thead><tr><th>Producto</th><th class="num">Uds PNC</th><th class="num">%</th><th class="num">Costo</th></tr></thead><tbody id="prodSearchTb"></tbody></table></div>
+        </div>
         <div class="g2">
           <div class="card">
             <div class="ch"><div><div class="ct">Top Productos por Costo de PNC</div><div class="cs" id="topSub">—</div></div>
@@ -554,8 +601,8 @@ tr.clk:hover{background:var(--surface2)}
         <div class="interp-note note-full" id="opNote"></div>
         <div class="g2">
           <div class="card">
-            <div class="ch"><div><div class="ct">Operadores por Unidades Defectuosas</div><div class="cs">Operador que registró el defecto. Clic para filtrar toda la app.</div></div>
-              <div class="ch-actions"><button class="cx-btn" title="Ampliar" onclick="expandChart('opbar')">⤢</button></div></div>
+            <div class="ch"><div><div class="ct">Ranking de Operadores</div><div class="cs" id="opRankSub">Ordenado por unidades defectuosas. Solo operadores con producción registrada. Clic para filtrar.</div></div>
+              <div class="ch-actions" style="gap:6px;align-items:center"><span style="font-size:11px;color:var(--mu)">Ver:</span><button id="opSort_def" class="seg-btn seg-on" onclick="setOpSort('def')">Defectos</button><button id="opSort_rate" class="seg-btn" onclick="setOpSort('rate')">Tasa</button><button class="cx-btn" title="Ampliar" onclick="expandChart('opbar')">⤢</button></div></div>
             <div class="cb" id="opBox" style="padding:14px 18px"><div style="position:relative;height:380px"><canvas id="opbar"></canvas></div></div>
           </div>
           <div class="card">
@@ -617,7 +664,7 @@ tr.clk:hover{background:var(--surface2)}
         <div class="card full act-wrap">
           <div class="ch"><div><div class="ct">Plan de Acciones</div><div class="cs">Tabla editable de acciones correctivas. Haz clic en cualquier celda para escribir; los cambios se guardan en este navegador. La metodología de cálculo se entrega en documento aparte.</div></div></div>
           <div class="cb" style="padding:0"><table class="dt"><thead><tr><th>#</th><th>Semana</th><th>Hallazgo</th><th>Acción</th><th>Responsable</th><th>Límite</th><th>Estado</th><th>Evidencia</th><th></th></tr></thead><tbody id="actTb"></tbody></table></div>
-          <div class="act-edit-bar"><button class="act-btn act-add" onclick="addActionRow()">+ Agregar fila</button><button class="act-btn act-clr" onclick="clearActions()">Limpiar todo</button></div>
+          <div class="act-edit-bar"><button class="act-btn act-add" onclick="addActionRow()">+ Agregar fila</button><button class="act-btn act-clr" onclick="clearActions()">Limpiar todo</button><button class="act-btn" onclick="exportActions()" style="margin-left:auto">Exportar a Excel</button></div>
         </div>
       </div>
 
@@ -659,9 +706,9 @@ const MOT_DESC={CAL1:'Derrame / manejo brusco (cajas, racks, picking, despacho)'
 const DEF_AREA={'ABOLLADA':'Producción / Logística','SELLADO TRANSVERSAL':'Producción UHT','SELLADO LONGITUDINAL':'Producción UHT','SELLADO HORIZONTAL':'Producción UHT','SELLADO VERTICAL':'Producción UHT','ROTA-CAÍDA':'Logística','MATERIAL DE ENVASE':'Calidad / Proveedor','EMPALME FÁBRICA':'Producción UHT','EMPALME MÁQUINA':'Producción UHT'};
 
 let F={mes:null,wk:null,mat:null,area:null,mot:null,prod:null,disp:null,dt:null,env:null,prov:null,op:null,day:null};
-let PAGE='p1';
+let PAGE='p0';
 const CH={};            // chart instances by canvas id
-const PG_TITLE={p1:'Resumen Ejecutivo',p2:'Tendencia y Metas',p3:'Productos y Motivos',p4:'Defectos y Causa Raíz',p5:'Trazabilidad de Lotes',p6:'Comparativa',p7:'Acciones',p8:'Proveedor',p9:'Operador'};
+const PG_TITLE={p0:'Portada',p1:'Resumen Ejecutivo',p2:'Tendencia y Metas',p3:'Productos y Motivos',p4:'Defectos y Causa Raíz',p5:'Trazabilidad de Lotes',p6:'Comparativa',p7:'Acciones',p8:'Proveedor',p9:'Operador'};
 
 // Regla de negocio: todo Tetra Fino (TF) de 1/2L se envasa en la envasadora D.
 // Se normaliza el dato por si alguna fila viniera con otra envasadora.
@@ -1116,7 +1163,7 @@ function openDayDetail(week,ds){
 function renderProductos(){
   const a=agg();
   document.getElementById('topSub').innerHTML='Ordenados por costo total = reempaque del reingresado + reproceso del recuperado + pérdida del destruido.'+(F.disp?' (Filtrado: '+DISP_LBL[F.disp]+')':'');
-  BUILD.topbar('topbar',false);
+  BUILD.topbar('topbar',false); renderProdSearch();
   // disposition table
   const tot=a.tot||1, ct=a.cost||1;
   const drows=[['rein',a.s,a.cs,C.pos],['rec',a.r,a.cr,C.warn],['def',a.c,a.cd,C.neg],['nop',a.n,a.cn,C.violet]];
@@ -1209,7 +1256,7 @@ function opProdVol(op){ const w=OPPRODW[op]||{}; return activeWeeks().reduce((s,
 function opCmpTable(){
   const savOp=F.op; F.op=null; const ds=defF(); F.op=savOp;
   const m={}; ds.forEach(d=>{const k=d.op;(m[k]=m[k]||{q:0,dts:{},prods:new Set()});m[k].q+=d.q;m[k].dts[d.dt]=(m[k].dts[d.dt]||0)+d.q;m[k].prods.add(d.p);});
-  const ent=Object.entries(m).map(([op,o])=>{const prod=opProdVol(op);return {op,q:o.q,prod,rate:prod>0?(o.q/prod*10000):null,dts:o.dts,np:o.prods.size};}).sort((a,b)=>b.q-a.q);
+  const ent=Object.entries(m).map(([op,o])=>{const prod=opProdVol(op);return {op,q:o.q,prod,rate:prod>0?(o.q/prod*10000):null,dts:o.dts,np:o.prods.size};}).filter(e=>e.prod>0).sort((a,b)=>OP_SORT==='rate'?((b.rate==null?-1:b.rate)-(a.rate==null?-1:a.rate)):(b.q-a.q));
   const totDef=ent.reduce((s,e)=>s+e.q,0)||1;
   document.getElementById('opCmpTb').innerHTML=ent.map(e=>{
     const td=Object.entries(e.dts).sort((a,b)=>b[1]-a[1])[0];
@@ -1277,7 +1324,20 @@ function defMixB(cid,legId,big){
   if(legId&&!big){const leg=document.getElementById(legId);if(leg)leg.innerHTML=ent.map((e,i)=>`<div class="dleg-it clk${F.dt===e[0]?' dleg-sel':''}" onclick="setFilter('dt','${e[0].replace(/'/g,"\\'")}')"><span class="dleg-dot" style="background:${cols[i]}"></span><span class="dleg-n">${e[0]}</span><span class="dleg-v">${fmt(e[1])}</span><span class="dleg-p">${pc(100*e[1]/tot,0)}%</span></div>`).join('');}
 }
 BUILD.provbar=(cid,big)=>rankBarB(cid,'prov',C.ink,big);
-BUILD.opbar=(cid,big)=>rankBarB(cid,'op',C.acc,big);
+function opRankB(cid,big){
+  const sav=F.op; F.op=null; const ds=defF(); F.op=sav;
+  const m=grp(ds,'op',d=>d.q);
+  let ent=Object.entries(m).map(([op,q])=>{const prod=opProdVol(op);return {op,q,prod,rate:prod>0?q/prod*10000:0};}).filter(e=>e.prod>0);
+  ent.sort((a,b)=>OP_SORT==='rate'?(b.rate-a.rate):(b.q-a.q));
+  ent=ent.slice(0,big?60:14);
+  const keys=ent.map(e=>e.op), labels=keys, data=ent.map(e=>OP_SORT==='rate'?+e.rate.toFixed(2):e.q);
+  const sel=F.op?keys.indexOf(F.op):-1;
+  const xt=OP_SORT==='rate'?'defectos por 10.000 uds producidas':'unidades defectuosas';
+  destroy(cid);
+  CH[cid]=new Chart(document.getElementById(cid),{type:'bar',data:{labels,datasets:[{data,backgroundColor:emph(keys.map(()=>C.acc),sel),borderRadius:5,maxBarThickness:big?24:18,categoryPercentage:0.86,barPercentage:0.92}]},
+    options:{...baseOpts(big),indexAxis:'y',onHover:hover(),onClick:big?undefined:(e,els)=>{if(els&&els.length)setFilter('op',keys[els[0].index]);},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>OP_SORT==='rate'?(c.raw+' def por 10.000 uds'):(fmt(c.raw)+' uds defectuosas')}}},scales:{x:{ticks:{font:{size:big?12:9}},title:{display:true,text:xt,font:{size:big?11:8}}},y:{ticks:{font:{size:big?12:10}}}}}});
+}
+BUILD.opbar=(cid,big)=>opRankB(cid,big);
 BUILD.provDef=(cid,big)=>defMixB(cid,big?null:'provDefLeg',big);
 BUILD.opDef=(cid,big)=>defMixB(cid,big?null:'opDefLeg',big);
 function rankTableB(tbId,dim){
@@ -1296,15 +1356,63 @@ function renderProveedor(){
 }
 function renderOperador(){
   const ds=defF(); const tot=ds.reduce((s,d)=>s+d.q,0)||1;
-  document.getElementById('opNote').innerHTML=`Unidades defectuosas atribuidas al <b>operador</b> que registró el defecto (${fmt(tot)} uds${anySub()?', filtrado':''}). Clic en un operador para filtrar toda la app y ver sus productos.`;
-  BUILD.opbar('opbar',false); BUILD.opDef('opDef',false); BUILD.opProd('opProdBar',false); opCmpTable();
+  const excl=[...new Set(ds.map(d=>d.op))].filter(o=>opProdVol(o)<=0).length;
+  document.getElementById('opNote').innerHTML=`Unidades defectuosas atribuidas al <b>operador</b> que registró el defecto (${fmt(tot)} uds${anySub()?', filtrado':''}). Solo se listan operadores con <b>producción registrada</b>${excl?` (${excl} sin producción quedan fuera)`:''}. Clic en un operador para filtrar y ver sus productos.`;
+  BUILD.opDef('opDef',false); BUILD.opProd('opProdBar',false); setOpSort(OP_SORT);
 }
 
-const RENDERERS={p1:renderResumen,p2:renderTendencia,p3:renderProductos,p4:renderDefectos,p5:renderTrazabilidad,p6:renderComparativa,p7:renderActions,p8:renderProveedor,p9:renderOperador};
+// ===== Portada + exportar acciones + buscador de productos + orden operador =====
+function renderPortada(){
+  let uds=0,s=0,r=0,c=0,n=0; const wkU={};
+  ROWS.forEach(x=>{const t=x.s+x.r+x.c+x.n; uds+=t; s+=x.s; r+=x.r; c+=x.c; n+=x.n; wkU[x.w]=(wkU[x.w]||0)+t;});
+  let prod=0; SEMS.forEach(w=>{prod+=(PRODW[w]?PRODW[w].ent:0);});
+  const pct=prod?uds/prod*100:0;
+  let inMeta=0; SEMS.forEach(w=>{const pw=PRODW[w]?PRODW[w].ent:0; const pcw=pw?(wkU[w]||0)/pw*100:0; if(pcw<1)inMeta++;});
+  const rec=(s+r+c+n)?100*(s+r)/(s+r+c+n):0;
+  let jU=0,jP=0; [23,24,25,26].forEach(w=>{jU+=(wkU[w]||0); jP+=(PRODW[w]?PRODW[w].ent:0);}); const jun=jP?jU/jP*100:0;
+  const set=(id,v)=>{const e=document.getElementById(id); if(e)e.textContent=v;};
+  set('cvPct',pct.toFixed(2).replace('.',',')+'%');
+  set('cvMeta2',inMeta+' de '+SEMS.length);
+  set('cvRec','≈ '+rec.toFixed(0)+'%');
+  set('cvJun',jun.toFixed(2).replace('.',',')+'%');
+  set('cvMeta','Análisis integral de calidad · Semanas 14–26');
+  const lg=document.querySelector('#p0 .cover-logo'); const src=document.querySelector('img[src^="data:image"]');
+  if(lg&&src)lg.src=src.src;
+}
+function exportActions(){
+  if(!ACT)ACT=loadActions();
+  const hdr=['#','Semana','Hallazgo','Acción','Responsable','Límite','Estado','Evidencia'];
+  const esc=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const lines=[hdr.map(esc).join(';')];
+  ACT.forEach((r,i)=>lines.push([i+1,r.sem,r.hallazgo,r.accion,r.resp,r.limite,r.estado,r.img?'Sí':'No'].map(esc).join(';')));
+  const csv='\ufeff'+lines.join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='plan_acciones_pnc.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function renderProdSearch(){
+  const a=agg(); const q=((document.getElementById('prodSearch')||{}).value||'').trim().toLowerCase();
+  const pm={}; a.rows.forEach(r=>{const k=r.p;(pm[k]=pm[k]||{u:0,c:0});pm[k].u+=uOf(r);pm[k].c+=cOf(r);});
+  let ent=Object.entries(pm).sort((x,y)=>y[1].c-x[1].c);
+  if(q)ent=ent.filter(([p])=>p.toLowerCase().includes(q));
+  const tt=a.tot||1; const tb=document.getElementById('prodSearchTb'); if(!tb)return;
+  tb.innerHTML=ent.map(([p,o])=>`<tr class="clk ${F.prod===p?'row-sel':''}" onclick="setFilter('prod','${p.replace(/'/g,"\\'")}')"><td>${p}</td><td class="num">${fmt(o.u)}</td><td class="num">${pc(100*o.u/tt,1)}%</td><td class="num">${money2(o.c)}</td></tr>`).join('')||'<tr><td colspan="4" style="color:var(--mu);padding:12px">Sin coincidencias</td></tr>';
+  const n=document.getElementById('prodSearchN'); if(n)n.textContent=ent.length+(q?' coincidencia(s)':' productos');
+}
+let OP_SORT='def';
+function setOpSort(s){ OP_SORT=s;
+  ['def','rate'].forEach(k=>{const b=document.getElementById('opSort_'+k); if(b)b.classList.toggle('seg-on',k===s);});
+  const st=document.getElementById('opRankSub'); if(st)st.textContent=(OP_SORT==='rate'?'Ordenado por tasa: defectos por 10.000 uds producidas (normaliza el volumen). Solo operadores con producción registrada. Clic para filtrar.':'Ordenado por unidades defectuosas. Solo operadores con producción registrada. Clic para filtrar.');
+  BUILD.opbar('opbar',false); opCmpTable();
+}
+
+const RENDERERS={p0:renderPortada,p1:renderResumen,p2:renderTendencia,p3:renderProductos,p4:renderDefectos,p5:renderTrazabilidad,p6:renderComparativa,p7:renderActions,p8:renderProveedor,p9:renderOperador};
 function nav(pg){
   PAGE=pg;
   document.querySelectorAll('.ni').forEach(n=>n.classList.toggle('active',n.dataset.pg===pg));
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===pg));
+  const cov=(pg==='p0'); const fb=document.querySelector('.filterbar'); if(fb)fb.style.display=cov?'none':'';
+  const tb=document.querySelector('.topbar'); if(tb)tb.style.display=cov?'none':'';
   renderAll();
 }
 function renderAll(){
@@ -1323,7 +1431,7 @@ function init(){
     document.querySelectorAll('canvas').forEach(c=>{const w=c.parentElement; if(w)w.innerHTML='<div style="padding:18px;color:var(--mu);font-size:12px;text-align:center">No se pudo cargar el motor de gráficos.</div>';});
   }
   buildPeriodOptions(); syncPeriodSel();
-  setTimeout(()=>{ renderAll(); },60);
+  setTimeout(()=>{ nav('p0'); },60);
 }
 if(document.readyState!=='loading')init(); else document.addEventListener('DOMContentLoaded',init);
 </script>
